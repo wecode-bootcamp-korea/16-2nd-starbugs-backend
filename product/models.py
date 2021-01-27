@@ -22,6 +22,8 @@ class Drink(models.Model):
     description  = models.TextField()
     created_at   = models.DateField(auto_now_add=True)
     destiny      = models.IntegerField()
+    is_new       = models.BooleanField()
+    is_season    = models.BooleanField()
     allergies    = models.ManyToManyField('Allergy', through="DrinkAllergy")
     tastes       = models.ManyToManyField('Taste', through="DrinkTaste")
     feels        = models.ManyToManyField('Feel', through="DrinkFeel")

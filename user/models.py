@@ -5,8 +5,6 @@ class User(models.Model):
     sex              = models.CharField(max_length=50)
     age              = models.IntegerField()
     email            = models.CharField(max_length=100)
-    is_new           = models.BooleanField()
-    is_season        = models.BooleanField()
 
     class Meta:
         db_table = "users"
