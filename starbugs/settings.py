@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-from my_settings import DATABASES, SECRET
+from my_settings import DATABASES, SECRET, LOGGING
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -148,3 +148,5 @@ CORS_ALLOW_HEADERS = (
     'x-requested-with',
 )
 #만약 허용해야할 추가적인 헤더키가 있다면?(사용자정의 키) 여기에 추가하면 됩니다.
+
+LOGGING = LOGGING

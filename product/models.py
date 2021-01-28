@@ -9,7 +9,7 @@ class MainCategory(models.Model):
 
 class SubCategory(models.Model):
     name          = models.CharField(max_length=50)
-    description   = models.CharField(max_length=200)
+    description   = models.CharField(max_length=200, null=True)
     main_category = models.ForeignKey('MainCategory', on_delete=models.CASCADE, related_name='subcategories')
 
     class Meta:
@@ -17,17 +17,19 @@ class SubCategory(models.Model):
 
 
 class Drink(models.Model):
-    sub_category = models.ForeignKey('SubCategory', on_delete=models.CASCADE, related_name='drinks')
-    korean_name  = models.CharField(max_length=50)
-    english_name = models.CharField(max_length=50)
-    description  = models.TextField()
-    created_at   = models.DateField(auto_now_add=True)
-    destiny      = models.IntegerField()
-    is_new       = models.BooleanField()
-    is_season    = models.BooleanField()
-    allergies    = models.ManyToManyField('Allergy', through="DrinkAllergy")
-    tastes       = models.ManyToManyField('Taste', through="DrinkTaste")
-    feels        = models.ManyToManyField('Feel', through="DrinkFeel")
+    sub_category      = models.ForeignKey('SubCategory', on_delete=models.CASCADE, related_name='drinks')
+    korean_name       = models.CharField(max_length=50)
+    english_name      = models.CharField(max_length=50)
+    main_description  = models.TextField()
+    sub_description   = models.TextField()
+    created_at        = models.DateTimeField(auto_now_add=True)
+    destiny           = models.IntegerField()
+    is_new            = models.BooleanField()
+    is_season         = models.BooleanField()
+    allergies         = models.ManyToManyField('Allergy', through="DrinkAllergy")
+    tastes            = models.ManyToManyField('Taste', through="DrinkTaste")
+    feels             = models.ManyToManyField('Feel', through="DrinkFeel")
+    price             = models.DecimalField(max_digits=10)
 
     class Meta:
         db_table = "drinks"
@@ -95,12 +97,12 @@ class Size(models.Model):
 class Nutrition(models.Model):
     drink      = models.ForeignKey('Drink', on_delete=models.CASCADE, related_name="nutritions")
     size       = models.ForeignKey('Size', on_delete=models.CASCADE, related_name="nutritions")
-    kcal       = models.DecimalField(max_digits=10, decimal_places=2)
-    sodium     = models.DecimalField(max_digits=10, decimal_places=2)
-    saturation = models.DecimalField(max_digits=10, decimal_places=2)
-    sugar      = models.DecimalField(max_digits=10, decimal_places=2)
-    protein    = models.DecimalField(max_digits=10, decimal_places=2)
-    caffeine   = models.DecimalField(max_digits=10, decimal_places=2)
+    kcal       = models.IntegerField()
+    sodium     = models.IntegerField()
+    saturation = models.IntegerField()
+    sugar      = models.IntegerField()
+    protein    = models.IntegerField()
+    caffeine   = models.IntegerField()
 
     class Meta:
         db_table = "nutritions"
