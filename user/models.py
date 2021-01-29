@@ -1,7 +1,7 @@
 from django.db import models
 
 class User(models.Model):  
-    drink_propensity = models.JSONField()
+    drink_propensity = models.JSONField(null=True)
     gender           = models.CharField(max_length=50)
     age              = models.CharField(max_length=50)
     email            = models.CharField(max_length=100)
@@ -16,4 +16,3 @@ class UserDrinkStatus(models.Model):
 
     class Meta:
         db_table = "userdrinkstatuses"
-
