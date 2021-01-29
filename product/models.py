@@ -77,4 +77,4 @@ class DrinkStatus(models.Model):
     name = models.CharField(max_length=50)  
 
     class Meta:
-        db_table = "userdrinkstatuses"
+        db_table = "drinkstatuses"
