@@ -10,8 +10,8 @@ class Order(models.Model):
         db_table = "orders"
 
 class Cart(models.Model):
-    drink    = models.ForeignKey("Drink", on_delete=models.CASCADE, related_name="carts")
-    size     = models.ForeignKey("Size", on_delete=models.CASCADE)
+    drink    = models.ForeignKey("product.Drink", on_delete=models.CASCADE, related_name="carts")
+    size     = models.ForeignKey("product.Size", on_delete=models.CASCADE)
     order    = models.ForeignKey("Order", on_delete=models.CASCADE, related_name="carts")
     quantity = models.IntegerField()
 
