@@ -29,7 +29,7 @@ class Drink(models.Model):
     allergies         = models.ManyToManyField('Allergy', through="DrinkAllergy")
     tastes            = models.ManyToManyField('Taste', through="DrinkTaste")
     feels             = models.ManyToManyField('Feel', through="DrinkFeel")
-    price             = models.DecimalField(max_digits=10)
+    price             = models.DecimalField(max_digits=10, decimal_places=4)
 
     class Meta:
         db_table = "drinks"
@@ -80,15 +80,15 @@ class DrinkFeel(models.Model):
 
 class Image(models.Model):
     image_url = models.URLField(max_length=200)
-    drink   = models.ForeignKey('Drink', on_delete=models.CASCADE, related_name='drinks')
+    drink   = models.ForeignKey('Drink', on_delete=models.CASCADE, related_name='images')
 
     class Meta:
         db_table = "images"
 
 
 class Size(models.Model):
-    ounce_size = models.CharField(max_length=50)
-    cup_size   = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, null=True)
+    
 
     class Meta:
         db_table = "sizes"

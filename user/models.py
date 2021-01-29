@@ -2,8 +2,8 @@ from django.db import models
 
 class User(models.Model):  
     drink_propensity = models.JSONField()
-    sex              = models.CharField(max_length=50)
-    age              = models.IntegerField()
+    gender           = models.CharField(max_length=50)
+    age              = models.CharField(max_length=50)
     email            = models.CharField(max_length=100)
 
     class Meta:
@@ -15,5 +15,5 @@ class UserDrinkStatus(models.Model):
     name = models.CharField(max_length=50)  
 
     class Meta:
-        db_table = "user_drink_statuses"
+        db_table = "userdrinkstatuses"
 
