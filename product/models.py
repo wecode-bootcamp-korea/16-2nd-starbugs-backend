@@ -23,13 +23,14 @@ class Drink(models.Model):
     main_description  = models.TextField()
     sub_description   = models.TextField()
     created_at        = models.DateTimeField(auto_now_add=True)
-    destiny           = models.IntegerField()
     is_new            = models.BooleanField()
     is_season         = models.BooleanField()
     allergies         = models.ManyToManyField('Allergy', through="DrinkAllergy")
     tastes            = models.ManyToManyField('Taste', through="DrinkTaste")
     feels             = models.ManyToManyField('Feel', through="DrinkFeel")
     price             = models.DecimalField(max_digits=10, decimal_places=4)
+    image_url         = models.URLField()
+    drink_status      = models.ForeignKey('DrinkStatus', on_delete=models.CASCADE, related_name='drinks')
 
     class Meta:
         db_table = "drinks"
@@ -50,46 +51,9 @@ class DrinkAllergy(models.Model):
         db_table = "drinkallergies"
 
 
-class Taste(models.Model):
-    name = models.CharField(max_length=50)
-
-    class Meta:
-        db_table = "tastes"
-
-
-class DrinkTaste(models.Model):
-    drink   = models.ForeignKey('Drink', on_delete=models.CASCADE)
-    taste   = models.ForeignKey('Taste', on_delete=models.CASCADE)
-
-    class Meta:
-        db_table = "drinktastes"
-
-
-class Feel(models.Model):
-    name = models.CharField(max_length=50)
-
-    class Meta:
-        db_table = "feels"
-
-class DrinkFeel(models.Model):
-    drink   = models.ForeignKey('Drink', on_delete=models.CASCADE)
-    feel    = models.ForeignKey('Feel', on_delete=models.CASCADE)
-
-    class Meta:
-        db_table = "drinkfeels"
-
-class Image(models.Model):
-    image_url = models.URLField(max_length=200)
-    drink   = models.ForeignKey('Drink', on_delete=models.CASCADE, related_name='images')
-
-    class Meta:
-        db_table = "images"
-
-
 class Size(models.Model):
     name = models.CharField(max_length=50, null=True)
     
-
     class Meta:
         db_table = "sizes"
 
@@ -108,3 +72,8 @@ class Nutrition(models.Model):
         db_table = "nutritions"
 
 
+class DrinkStatus(models.Model):
+    name = models.CharField(max_length=50)  
+
+    class Meta:
+        db_table = "userdrinkstatuses"
