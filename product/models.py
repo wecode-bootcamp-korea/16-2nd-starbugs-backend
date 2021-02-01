@@ -1,3 +1,4 @@
+
 from django.db import models
 
 class MainCategory(models.Model):
@@ -57,7 +58,6 @@ class Size(models.Model):
     
     class Meta:
         db_table = "sizes"
-
 
 class Nutrition(models.Model):
     drink      = models.ForeignKey('Drink', on_delete=models.CASCADE, related_name="nutritions")
