@@ -22,8 +22,8 @@ class Cart(models.Model):
 
 
 class OrderStatus(models.Model):
-    order  = models.ForeignKey("Order", on_delete=models.CASCADE, related_name="order_statuses")
+    order  = models.ForeignKey("Order", on_delete=models.CASCADE, related_name="orderstatus")
     status = models.BooleanField()
 
     class Meta:
-        db_table = "orderstatuses"
+        db_table = "orderstatus"

@@ -25,7 +25,7 @@ class Drink(models.Model):
     created_at        = models.DateTimeField(auto_now_add=True)
     is_new            = models.BooleanField()
     is_season         = models.BooleanField()
-    destiny           = models.IntegerField(default=0)
+    density           = models.IntegerField(default=0)
     taste             = models.IntegerField(default=0)
     feel              = models.IntegerField(default=0)
     price             = models.DecimalField(max_digits=10, decimal_places=4)
@@ -77,4 +77,4 @@ class DrinkStatus(models.Model):
     name = models.CharField(max_length=50)  
 
     class Meta:
-        db_table = "drinkstatuses"
+        db_table = "drinkstatus"
