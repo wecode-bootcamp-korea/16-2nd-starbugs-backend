@@ -1,3 +1,4 @@
+import json
 import requests
 import jwt
 
@@ -8,19 +9,24 @@ from .models          import User
 from my_settings      import SECRET
 
 class KakaoSignInView(View):
-    def get(self, request):
+    def post(self, request):
         try:
-            access_token = request.headers.get('Authorization', None)
+            data         = json.loads(request.body)
+            access_token = data['access_token']
             headers      = {'Authorization': f'Bearer {access_token}'}
             url          = 'https://kapi.kakao.com/v2/user/me'
             kakao_data   = requests.get(url, headers=headers).json()
-            
+
+            gender = kakao_data['kakao_account']['gender']
+            age    = kakao_data['kakao_account']['age_range']
+
             user, _ = User.objects.get_or_create(
-                email            = kakao_data['kakao_account']['email'],
-                gender           = kakao_data['kakao_account']['gender'],
-                age              = kakao_data['kakao_account']['age'],
-                drink_propensity = None,
+                email  = kakao_data['kakao_account']['email'],
             )
+            
+            user.gender = gender
+            user.age    = age
+            user.save()
              
             access_token = jwt.encode({"user_id" : user.id}, SECRET, algorithm='HS256')
 
