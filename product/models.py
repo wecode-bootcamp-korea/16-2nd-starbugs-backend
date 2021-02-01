@@ -25,11 +25,12 @@ class Drink(models.Model):
     created_at        = models.DateTimeField(auto_now_add=True)
     is_new            = models.BooleanField()
     is_season         = models.BooleanField()
-    allergies         = models.ManyToManyField('Allergy', through="DrinkAllergy")
-    tastes            = models.ManyToManyField('Taste', through="DrinkTaste")
-    feels             = models.ManyToManyField('Feel', through="DrinkFeel")
+    destiny           = models.IntegerField(default=0)
+    taste             = models.IntegerField(default=0)
+    feel              = models.IntegerField(default=0)
     price             = models.DecimalField(max_digits=10, decimal_places=4)
     image_url         = models.URLField()
+    allergies         = models.ManyToManyField('Allergy', through="DrinkAllergy")
     drink_status      = models.ForeignKey('DrinkStatus', on_delete=models.CASCADE, related_name='drinks')
 
     class Meta:
