@@ -4,7 +4,7 @@ db.sqlite3-journal
 media 
 *.csv
 my_settings.py
-db_uploader.py
+db_uploaders.py
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/vscode,vim,python,django,macos
