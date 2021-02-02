@@ -7,7 +7,7 @@ class User(models.Model):
     density           = models.IntegerField(default=0)
     taste            = models.IntegerField(default=0)
     feel             = models.IntegerField(default=0)
-    drink_status     = models.ForeignKey('product.DrinkStatus', on_delete=models.CASCADE)
+    drink_status     = models.ForeignKey('product.DrinkStatus', on_delete=models.CASCADE, null=True, blank=True)
     
     class Meta:
         db_table = "users"
