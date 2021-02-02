@@ -140,7 +140,7 @@ def transaction():
 
     for i in DRINKS:
         
-        x = 0
+        x = 1
 
         feel = random.randint(0,100)
         if feel >= 50:
