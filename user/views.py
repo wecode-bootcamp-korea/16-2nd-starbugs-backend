@@ -2,11 +2,11 @@ import json
 import requests
 import jwt
 
-from django.http      import JsonResponse
-from django.views     import View
-from .models          import User
+from django.http     import JsonResponse
+from django.views    import View
+from .models         import User
 
-from my_settings      import SECRET
+from my_settings     import SECRET
 
 class KakaoSignInView(View):
     def post(self, request):
