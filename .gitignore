@@ -5,7 +5,7 @@ media
 *.csv
 my_settings.py
 db_uploaders.py
-
+orderData
 
 # Created by https://www.toptal.com/developers/gitignore/api/vscode,vim,python,django,macos
 # Edit at https://www.toptal.com/developers/gitignore?templates=vscode,vim,python,django,macos
