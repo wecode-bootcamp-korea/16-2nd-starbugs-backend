@@ -21,3 +21,14 @@ def check_user(func):
         return func(self, request, *args, **kwargs)
 
     return wrapper
+
+def check_user_slider(func):
+    def wrapper(self, request, *args, **kwargs):
+        try:
+            token        = request.headers.get('Authorization')
+            payload      = jwt.decode(token, SECRET, algorithms='HS256')
+            request.user = User.objects.get(id=payload['user_id'])
+        except:    
+            request.user = None
+        return func(self, request, *args, **kwargs)
+    return wrapper
