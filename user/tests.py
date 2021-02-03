@@ -15,7 +15,7 @@ class KakaoSignIn(TestCase):
                     'kakao_account': {
                         'id'        : '12345',
                         'email'     : 'test@gmail.com',
-                        'age'       : '20~30',i
+                        'age_range' : '20~30',
                         'gender'    : 'Female'
                     }
                 }
