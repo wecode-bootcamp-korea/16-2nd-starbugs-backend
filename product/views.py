@@ -76,7 +76,7 @@ class DrinkListView(View):
                 'sugar'      : drink.nutritions.first().sugar,
                 'protein'    : drink.nutritions.first().protein,
                 'caffeine'   : drink.nutritions.first().caffeine
-            } for drink in subcategory.drinks.all()] 
+            } for drink in subcategory.drinks.all()]  
         } for subcategory in SubCategory.objects.prefetch_related('drinks__nutritions').filter(**filter_set)]
 
         return JsonResponse({"results" : subcategory_list}, status = 200)
@@ -103,3 +103,4 @@ class MainSlideProductsView(View):
         drinks = Drink.objects.filter(sub_category=SubCategory.objects.get(id=random.randint(1, 9)))
         urls   = [drink.image_url for drink in drinks]
         return JsonResponse({"my_urls": urls }, status=200)
+        
