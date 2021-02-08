@@ -12,11 +12,12 @@ class CartView(View):
     @check_user
     def get(self, request):
         try:
-            user  = request.user
-            order = Order.objects.get(user=user, order_status_id = 2)
-            carts = Cart.objects.filter(order = order)
+            user     = request.user
+            order, _ = Order.objects.get_or_create(user=user, order_status_id = 2)
+            carts    = Cart.objects.filter(order = order)
 
             product_list = [{
+                'cart_id'  : cart.id,
                 'id'       : cart.drink.id,
                 'name'     : cart.drink.korean_name,
                 'img'      : cart.drink.image_url,
@@ -45,7 +46,7 @@ class CartView(View):
                 order    = order
             )
 
-            cart.quantity += F('quantity') + amount
+            cart.quantity = F('quantity') + amount
             cart.save()
 
             return JsonResponse({"results" : "SUCCESS"}, status=201)
@@ -62,7 +63,11 @@ class CartView(View):
         try:
             data  = json.loads(request.body)
             order = Order.objects.get(user=request.user, order_status_id = 2)
-            cart  = Cart.objects.get(drink_id = data['drink'], order = order)
+            cart  = Cart.objects.get(
+                drink_id = data['drink'],
+                order    = order,
+                size_id  = data['size'],
+            )
             cart.quantity = data['amount']
             cart.save()
 

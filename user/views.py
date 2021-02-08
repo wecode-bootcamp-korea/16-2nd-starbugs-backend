@@ -27,9 +27,8 @@ class KakaoSignInView(View):
             user.gender = gender
             user.age    = age
             user.save()
-             
-            access_token = jwt.encode({"user_id" : user.id}, SECRET, algorithm='HS256')
 
+            access_token = jwt.encode({"user_id" : user.id}, SECRET, algorithm='HS256')
             return JsonResponse({'access_token': access_token}, status=201)
 
         except KeyError:

@@ -2,30 +2,19 @@ import random
 import numpy as np
 
 from django.views import View
-from django.http  import JsonResponse, HttpResponse
+from django.http  import JsonResponse
 
 from sklearn.preprocessing   import OrdinalEncoder
-from sklearn.naive_bayes     import CategoricalNB
 
 from .utils      import classifier, input_file
-from user.utils  import check_user_slider
-from user.models import User
-from .models     import (
-    MainCategory, 
-    SubCategory,
-    Drink,
-    Allergy,
-    DrinkAllergy,
-    Size,
-    Nutrition,
-    DrinkStatus
-)
+from user.utils  import check_user_slider, query_debugger
+from .models     import SubCategory, Drink
 
 
 class ProductDetailView(View):
     def get(self, request, product_id):
         try:
-            drink = Drink.objects.prefetch_related("allergies","nutritions__size").get(id = product_id)
+            drink = Drink.objects.prefetch_related("allergies", "nutritions__size").get(id = product_id)
 
             product_info = {
                 "id"                : product_id,
@@ -61,22 +50,20 @@ class ProductDetailView(View):
         except Drink.DoesNotExist:
             return JsonResponse({'error' : "DRINK_DOES_NOT_EXIST"}, status=400)
 
-
 class DrinkListView(View):
+    @query_debugger
     def get(self, request):
-        names            = request.GET.get("name", None)
-        filter_set       = {}
+        names      = request.GET.get("name", None)
+        filter_set = {}
 
         if names:
             filter_set['name__in'] = names.split(',')
            
-        subcategory_list = [
-        {
-        'subcategory_id' : subcategory.id,
-        'name'           : subcategory.name,
-        'description'    : subcategory.description,
-        'products' : [
-            {
+        subcategory_list = [{
+            'subcategory_id' : subcategory.id,
+            'name'           : subcategory.name,
+            'description'    : subcategory.description,
+            'products' : [{
                 'id'         : drink.id,
                 'isnew'      : drink.is_new,
                 'isseason'   : drink.is_season,
@@ -90,12 +77,11 @@ class DrinkListView(View):
                 'protein'    : drink.nutritions.first().protein,
                 'caffeine'   : drink.nutritions.first().caffeine
             } for drink in subcategory.drinks.all()] 
-        }for subcategory in SubCategory.objects.prefetch_related('drinks__nutritions').filter(**filter_set)]
+        } for subcategory in SubCategory.objects.prefetch_related('drinks__nutritions').filter(**filter_set)]
 
         return JsonResponse({"results" : subcategory_list}, status = 200)
 
 class MainSlideProductsView(View):
-
     @check_user_slider
     def get(self, request):
         if request.user:

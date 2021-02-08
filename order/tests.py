@@ -60,6 +60,7 @@ class CartViewTest(TestCase):
     def test_get_cart_view_success(cls):
         
         product_list = [{
+            "cart_id"  : 1,
             "id"       : 1,
             'name'     : "아이스 커피",
             'img'      : "d",
@@ -102,6 +103,7 @@ class CartViewTest(TestCase):
     def test_patch_cart_view_success(cls):
         data = {
             "amount"  : 123,
+            "size"    : 1,
             "drink"   : 1,
         }
         response = client.patch('/order/cart', json.dumps(data), **cls.header, content_type='application/json')
@@ -111,6 +113,7 @@ class CartViewTest(TestCase):
     def test_patch_cart_view_doesnotexists(cls):
         data = {
             "amount"  : 123,
+            "size"    : 1,
             "drink"   : 123,
         }
         response = client.patch('/order/cart', json.dumps(data), **cls.header, content_type='application/json')
@@ -120,6 +123,7 @@ class CartViewTest(TestCase):
     def test_patch_cart_view_keyerror(cls):
         data = {
             "amount"  : 123,
+            "size"    : 1,
             "key"     : 123,
         }
         response = client.patch('/order/cart', json.dumps(data), **cls.header, content_type='application/json')

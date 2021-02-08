@@ -3,9 +3,8 @@ import jwt, random
 from .utils import classifier, input_file
 
 from sklearn.preprocessing   import OrdinalEncoder
-from sklearn.naive_bayes     import CategoricalNB
 
-from django.test   import TestCase, Client
+from django.test   import TestCase
 from django.urls   import reverse
 
 from starbugs.settings import SECRET
@@ -16,18 +15,15 @@ from product.models    import (
     MainCategory, 
     Size, 
     SubCategory, 
-    Nutrition, 
-    DrinkAllergy,
     Allergy,
 )
-
 
 class ProductListTest(TestCase):
     def setUp(self):
         self.list_url = reverse('list')
-        self.maxDiff = None
+        self.maxDiff  = None
 
-        self.user_test  = User.objects.create(
+        self.user_test = User.objects.create(
             gender ='female',
             age    = '20-29',
             email  = "test@wecode.io",
@@ -136,45 +132,55 @@ class ProductListTest(TestCase):
         self.assertEquals(response.json(), {
             'results': 
             [
-                {'subcategory_id': 1, 
-                'name': 'test', 
-                'description': 'test', 
-                'products': [
-                    {'id': 1, 
-                    'isnew': True, 
-                    'isseason': True, 
-                    'title': 'abc', 
-                    'image': 'test.io', 
-                    'size': 'Tall', 'kcal': 1, 
-                    'sodium': 2, 'saturation': 2, 
-                    'sugar': 10, 
-                    'protein': 5, 
-                    'caffeine': 5}, 
-                    {'id': 2, 
-                    'isnew': True, 
-                    'isseason': True, 
-                    'title': 'abc', 
-                    'image': 'test.io', 
-                    'size': 'Tall', 
-                    'kcal': 1, 
-                    'sodium': 2, 
-                    'saturation': 2, 
-                    'sugar': 10, 
-                    'protein': 5, 
-                    'caffeine': 5}, 
-                    {'id': 3, 
-                    'isnew': True, 
-                    'isseason': True, 
-                    'title': 'abc', 
-                    'image': 'test.io', 
-                    'size': 'Tall', 
-                    'kcal': 1, 
-                    'sodium': 2, 
-                    'saturation': 2, 
-                    'sugar': 10, 
-                    'protein': 5, 
-                    'caffeine': 5}
-                                    ]}]})
+                {
+                    'subcategory_id': 1, 
+                    'name': 'test', 
+                    'description': 'test', 
+                    'products': [
+                        {
+                            'id': 1, 
+                            'isnew': True, 
+                            'isseason': True, 
+                            'title': 'abc', 
+                            'image': 'test.io', 
+                            'size': 'Tall', 'kcal': 1, 
+                            'sodium': 2, 'saturation': 2, 
+                            'sugar': 10, 
+                            'protein': 5, 
+                            'caffeine': 5
+                        }, 
+                        {
+                            'id': 2, 
+                            'isnew': True, 
+                            'isseason': True, 
+                            'title': 'abc', 
+                            'image': 'test.io', 
+                            'size': 'Tall', 
+                            'kcal': 1, 
+                            'sodium': 2, 
+                            'saturation': 2, 
+                            'sugar': 10, 
+                            'protein': 5, 
+                            'caffeine': 5
+                        }, 
+                        {
+                            'id': 3, 
+                            'isnew': True, 
+                            'isseason': True, 
+                            'title': 'abc', 
+                            'image': 'test.io', 
+                            'size': 'Tall', 
+                            'kcal': 1, 
+                            'sodium': 2, 
+                            'saturation': 2, 
+                            'sugar': 10, 
+                            'protein': 5, 
+                            'caffeine': 5
+                        }
+                    ]
+                }
+            ]
+        })
         
 
 class MainSliderLoginTest(TestCase):

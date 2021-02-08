@@ -7,7 +7,7 @@ client = Client()
 
 class KakaoSignIn(TestCase):
     @patch('user.views.requests')
-    def test_kakao_sign_in_success(self, request):
+    def test_kakao_sign_in_success(self, mock):
         class FakeKakaoResponse:
             def json(self):
                 return {
@@ -21,20 +21,12 @@ class KakaoSignIn(TestCase):
                 }
 
         access_token = {"access_token": 123456789}
-        request.get  = MagicMock(return_value = FakeKakaoResponse())
+        mock.get = MagicMock(return_value = FakeKakaoResponse())
         response     = client.post('/user/kakao', json.dumps(access_token), content_type='application/json')
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.json(), {"access_token": response.json().get("access_token")})
 
-    @patch('user.views.requests')
-    def test_kakao_sign_in_key_error(self, mocked_request):
-        class KakaoResponse:
-            def json(self):
-                return {
-                    'id' : '11234',
-                }
-
-        mocked_request.post = MagicMock(return_value = KakaoResponse())
+    def test_kakao_sign_in_key_error(self):
 
         response = self.client.post('/user/kakao', content_type='application/json')
         self.assertEqual(response.status_code, 400)

@@ -1,12 +1,9 @@
 import pandas as pd
-import numpy  as np
-import csv
 
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes     import CategoricalNB
 from sklearn                 import preprocessing
 from sklearn.preprocessing   import OrdinalEncoder
-
 
 def classifier(input_file):
     df = pd.read_csv(input_file, header = 0)
